@@ -1,60 +1,70 @@
-const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
+import { useState } from 'react'
 
+
+const App = () => {
+
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+  const all = bad + good + neutral
 
   return (
     <div>
-      <Header course={course} />
-      <Content parts={course.parts} />
-      <Totals parts={course.parts} />
+      <h1>give feedback</h1>
+      <Botones handleClick= {() => setGood(good + 1)} text= "good"></Botones>
+      <Botones handleClick= {() => setNeutral(neutral + 1)} text= "neutral"></Botones>
+      <Botones handleClick= {() => setBad(bad + 1)} text= "bad"></Botones>
+      <h1>statistics</h1>
+      <Statistics all={all} good={good} bad={bad} neutral={neutral}></Statistics>
+
     </div>
   )
 }
 
-const Header = (props) => {
-  return <h1>{props.course.name}</h1>
+const Botones = (props) => {
+  return <button onClick={props.handleClick}>{props.text}</button>
 }
 
-const Content = (props) => {
-  return(
-    <>
-      <Part part = {props.parts[0].name} exercises = {props.parts[0].exercises}></Part>
-      <Part part = {props.parts[1].name} exercises = {props.parts[1].exercises}></Part>
-      <Part part = {props.parts[2].name} exercises = {props.parts[2].exercises}></Part>
-    </>
-  )
-  
+const StatisticsLine = ({text, value}) => {
+  return <span>{text} {value}</span>
 }
 
-const Part = (props) => {
-  return(
-    <>
-      <p>{props.part} <span>{props.exercises}</span></p>
-    </>
-  )
+const Statistics = ({all, good, bad, neutral}) => {
+  if(all != 0){
+    return (
+      <table>
+        <tbody>
+          <tr>
+            <td><StatisticsLine text="good"></StatisticsLine></td>
+            <td><StatisticsLine value={good}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="neutral"></StatisticsLine></td>
+            <td><StatisticsLine value={neutral}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="bad"></StatisticsLine></td>
+            <td><StatisticsLine value={bad}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="all"></StatisticsLine></td>
+            <td><StatisticsLine value={neutral}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="average"></StatisticsLine></td>
+            <td><StatisticsLine value={(good - bad) / all}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="positive"></StatisticsLine></td>
+            <td><StatisticsLine value={(good / all) * 100 + " %"}></StatisticsLine></td>
+          </tr>
+        </tbody>
+      </table>
+    )
+  } else {
+    return <h2>No feedback given</h2>
+  }
 }
 
-const Totals = (props) => {
-  return (
-    <>
-      <p>Totals {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
-    </>
-  )
-}
+
 export default App
