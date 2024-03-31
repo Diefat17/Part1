@@ -1,60 +1,34 @@
-const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
+import { useState } from 'react'
 
+
+const App = () => {
+  // guarda los clics de cada botón en su propio estado
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
 
   return (
     <div>
-      <Header course={course} />
-      <Content parts={course.parts} />
-      <Totals parts={course.parts} />
+      <h1>give feedback</h1>
+      <Botones handleClick= {() => setGood(good + 1)} text= "good"></Botones>
+      <Botones handleClick= {() => setNeutral(neutral + 1)} text= "neutral"></Botones>
+      <Botones handleClick= {() => setBad(bad + 1)} text= "bad"></Botones>
+      <h1>statistics</h1>
+      <Statics text="good" value={good}></Statics>
+      <Statics text="neutral" value={neutral}></Statics>
+      <Statics text="bad" value={bad}></Statics>
     </div>
   )
 }
 
-const Header = (props) => {
-  return <h1>{props.course.name}</h1>
+const Botones = (props) => {
+  return <button onClick={props.handleClick}>{props.text}</button>
 }
 
-const Content = (props) => {
-  return(
-    <>
-      <Part part = {props.parts[0].name} exercises = {props.parts[0].exercises}></Part>
-      <Part part = {props.parts[1].name} exercises = {props.parts[1].exercises}></Part>
-      <Part part = {props.parts[2].name} exercises = {props.parts[2].exercises}></Part>
-    </>
-  )
-  
+const Statics = ({text, value}) => {
+  return <p>{text} {value}</p>
 }
 
-const Part = (props) => {
-  return(
-    <>
-      <p>{props.part} <span>{props.exercises}</span></p>
-    </>
-  )
-}
-
-const Totals = (props) => {
-  return (
-    <>
-      <p>Totals {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
-    </>
-  )
-}
 export default App
+
+//La funcion set counter se puede nombrar de cualquier manera
