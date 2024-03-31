@@ -1,69 +1,35 @@
 import { useState } from 'react'
 
-
 const App = () => {
+  const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
+    'The only way to go fast, is to go well.'
+  ]
 
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const all = bad + good + neutral
+  const [selected, setSelected] = useState(0)
+  
+  const Azar = () => {
+    let numero = Math.floor(Math.random() * (anecdotes.length))
+    console.log(numero)
+    return numero
+  }
 
   return (
     <div>
-      <h1>give feedback</h1>
-      <Botones handleClick= {() => setGood(good + 1)} text= "good"></Botones>
-      <Botones handleClick= {() => setNeutral(neutral + 1)} text= "neutral"></Botones>
-      <Botones handleClick= {() => setBad(bad + 1)} text= "bad"></Botones>
-      <h1>statistics</h1>
-      <Statistics all={all} good={good} bad={bad} neutral={neutral}></Statistics>
-
+      {anecdotes[selected]}
+      <NextButton text="next anecdote" handleEvent={ () => setSelected(Azar())}></NextButton>
     </div>
   )
 }
 
-const Botones = (props) => {
-  return <button onClick={props.handleClick}>{props.text}</button>
-}
-
-const StatisticsLine = ({text, value}) => {
-  return <span>{text} {value}</span>
-}
-
-const Statistics = ({all, good, bad, neutral}) => {
-  if(all != 0){
-    return (
-      <table>
-        <tbody>
-          <tr>
-            <td><StatisticsLine text="good"></StatisticsLine></td>
-            <td><StatisticsLine value={good}></StatisticsLine></td>
-          </tr>
-          <tr>
-            <td><StatisticsLine text="neutral"></StatisticsLine></td>
-            <td><StatisticsLine value={neutral}></StatisticsLine></td>
-          </tr>
-          <tr>
-            <td><StatisticsLine text="bad"></StatisticsLine></td>
-            <td><StatisticsLine value={bad}></StatisticsLine></td>
-          </tr>
-          <tr>
-            <td><StatisticsLine text="all"></StatisticsLine></td>
-            <td><StatisticsLine value={neutral}></StatisticsLine></td>
-          </tr>
-          <tr>
-            <td><StatisticsLine text="average"></StatisticsLine></td>
-            <td><StatisticsLine value={(good - bad) / all}></StatisticsLine></td>
-          </tr>
-          <tr>
-            <td><StatisticsLine text="positive"></StatisticsLine></td>
-            <td><StatisticsLine value={(good / all) * 100 + " %"}></StatisticsLine></td>
-          </tr>
-        </tbody>
-      </table>
-    )
-  } else {
-    return <h2>No feedback given</h2>
-  }
+const NextButton = ({text, handleEvent}) => {
+  return <button onClick={handleEvent}>{text}</button>
 }
 
 
