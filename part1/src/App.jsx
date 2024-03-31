@@ -26,24 +26,45 @@ const Botones = (props) => {
 }
 
 const StatisticsLine = ({text, value}) => {
-  return <p>{text} {value}</p>
+  return <span>{text} {value}</span>
 }
 
 const Statistics = ({all, good, bad, neutral}) => {
   if(all != 0){
     return (
-      <>
-        <StatisticsLine text="good" value={good}></StatisticsLine>
-        <StatisticsLine text="neutral" value={neutral}></StatisticsLine>
-        <StatisticsLine text="bad" value={bad}></StatisticsLine>
-        <StatisticsLine text="all" value={bad + good + neutral}></StatisticsLine>
-        <StatisticsLine text="average" value={(good - bad) / all}></StatisticsLine>
-        <StatisticsLine text="positive" value={(good / all) * 100 + " %"}> </StatisticsLine>
-      </>
+      <table>
+        <tbody>
+          <tr>
+            <td><StatisticsLine text="good"></StatisticsLine></td>
+            <td><StatisticsLine value={good}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="neutral"></StatisticsLine></td>
+            <td><StatisticsLine value={neutral}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="bad"></StatisticsLine></td>
+            <td><StatisticsLine value={bad}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="all"></StatisticsLine></td>
+            <td><StatisticsLine value={neutral}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="average"></StatisticsLine></td>
+            <td><StatisticsLine value={(good - bad) / all}></StatisticsLine></td>
+          </tr>
+          <tr>
+            <td><StatisticsLine text="positive"></StatisticsLine></td>
+            <td><StatisticsLine value={(good / all) * 100 + " %"}></StatisticsLine></td>
+          </tr>
+        </tbody>
+      </table>
     )
   } else {
     return <h2>No feedback given</h2>
   }
 }
+
 
 export default App
