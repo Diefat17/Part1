@@ -6,6 +6,7 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const all = bad + good + neutral
 
   return (
     <div>
@@ -17,6 +18,9 @@ const App = () => {
       <Statics text="good" value={good}></Statics>
       <Statics text="neutral" value={neutral}></Statics>
       <Statics text="bad" value={bad}></Statics>
+      <Statics text="all" value={bad + good + neutral}></Statics>
+      <Statics text="average" value={(good - bad) / all}></Statics>
+      <Statics text="positive" value={(good / all) * 100 + " %"}> </Statics>
     </div>
   )
 }
@@ -30,5 +34,3 @@ const Statics = ({text, value}) => {
 }
 
 export default App
-
-//La funcion set counter se puede nombrar de cualquier manera
