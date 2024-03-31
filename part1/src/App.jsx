@@ -15,12 +15,8 @@ const App = () => {
       <Botones handleClick= {() => setNeutral(neutral + 1)} text= "neutral"></Botones>
       <Botones handleClick= {() => setBad(bad + 1)} text= "bad"></Botones>
       <h1>statistics</h1>
-      <Statics text="good" value={good}></Statics>
-      <Statics text="neutral" value={neutral}></Statics>
-      <Statics text="bad" value={bad}></Statics>
-      <Statics text="all" value={bad + good + neutral}></Statics>
-      <Statics text="average" value={(good - bad) / all}></Statics>
-      <Statics text="positive" value={(good / all) * 100 + " %"}> </Statics>
+      <All all={all} good={good} bad={bad} neutral={neutral}></All>
+
     </div>
   )
 }
@@ -29,8 +25,25 @@ const Botones = (props) => {
   return <button onClick={props.handleClick}>{props.text}</button>
 }
 
-const Statics = ({text, value}) => {
+const Statistics = ({text, value}) => {
   return <p>{text} {value}</p>
+}
+
+const All = ({all, good, bad, neutral}) => {
+  if(all != 0){
+    return (
+      <>
+        <Statistics text="good" value={good}></Statistics>
+        <Statistics text="neutral" value={neutral}></Statistics>
+        <Statistics text="bad" value={bad}></Statistics>
+        <Statistics text="all" value={bad + good + neutral}></Statistics>
+        <Statistics text="average" value={(good - bad) / all}></Statistics>
+        <Statistics text="positive" value={(good / all) * 100 + " %"}> </Statistics>
+      </>
+    )
+  } else {
+    return <h2>No feedback given</h2>
+  }
 }
 
 export default App
