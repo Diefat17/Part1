@@ -20,14 +20,21 @@ const App = () => {
   
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}<br></br>
       <span>has {points[selected]} votes </span><br></br>
       <ButtonsAnecdotes text="vote" handleEvent={() => {
         copy[selected] += 1
         setPoints(copy)
-        console.log(copy)
+        console.log(points.indexOf(Math.max(...points)))
       }}></ButtonsAnecdotes>
       <ButtonsAnecdotes text="next anecdote" handleEvent={ () => setSelected(Math.floor(Math.random() * (anecdotes.length)))}></ButtonsAnecdotes>
+
+      <h1>Anecdote wit most votes</h1>
+
+      <p>{anecdotes[points.indexOf(Math.max(...points))]}</p>
+      <span>has {points[points.indexOf(Math.max(...points))]} votes</span>
+
     </div>
   )
 }
@@ -35,6 +42,7 @@ const App = () => {
 const ButtonsAnecdotes = ({text, handleEvent}) => {
   return <button onClick={handleEvent}>{text}</button>
 }
+
 
 
 export default App
