@@ -13,22 +13,26 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
-  
-  const Azar = () => {
-    let numero = Math.floor(Math.random() * (anecdotes.length))
-    console.log(numero)
-    return numero
-  }
+  const [points, setPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0])
+  const copy = [...points]
 
+
+  
   return (
     <div>
-      {anecdotes[selected]}
-      <NextButton text="next anecdote" handleEvent={ () => setSelected(Azar())}></NextButton>
+      {anecdotes[selected]}<br></br>
+      <span>has {points[selected]} votes </span><br></br>
+      <ButtonsAnecdotes text="vote" handleEvent={() => {
+        copy[selected] += 1
+        setPoints(copy)
+        console.log(copy)
+      }}></ButtonsAnecdotes>
+      <ButtonsAnecdotes text="next anecdote" handleEvent={ () => setSelected(Math.floor(Math.random() * (anecdotes.length)))}></ButtonsAnecdotes>
     </div>
   )
 }
 
-const NextButton = ({text, handleEvent}) => {
+const ButtonsAnecdotes = ({text, handleEvent}) => {
   return <button onClick={handleEvent}>{text}</button>
 }
 
